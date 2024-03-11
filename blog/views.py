@@ -8,3 +8,5 @@ def posts(request):
     return HttpResponse("hello")
 def pages(request):
     pass
+def new(request):
+    pass
