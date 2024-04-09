@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title%}{{author.firstname}}{% endblock %}
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static 'blog/postdetail.css' %}" />
+{% endblock %}
+
+{% block content %}
+<section id="summary">
+    <h2>{{author.firstname|title}} {{ author.lastname|title}}</h2>
+    <article>
+        
+        <img src="{% static 'blog/images/mountains.jpg' %}" alt="Post Title" />
+        <address>{{author.email}}</address>
+        <div>
+            Author Name is {{author.firstname}} {{ author.lastname}}
+        </div>
+    </article>
+
+    <main>
+        I am the author
+    </main>
+</section>
+</section>
+{% endblock %}

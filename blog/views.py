@@ -1,9 +1,10 @@
 from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from datetime import date
 from .models import Author,Blog,Tags
 all_post=Blog.objects.all()
-
+all_author=Author.objects.all()
 def starting_page(request):
     # sorted_posts=sorted(all_post)
     # latest_posts=sorted_posts[-3:]
@@ -21,3 +22,10 @@ def post_detail(request, slug):
     return render(request, "blog/post-detail.html",{
         "post": identified_post
     })
+# def author(request, author):
+#     identified_author = get_object_or_404(Author, firstname=author)
+#     return render(request, "blog/author.html", {"author": identified_author})
+def author(request, author):
+    # Assuming `all_author` is defined in your views as in your previous code
+    identified_author = next(auth for auth in all_author if auth.firstname == author)
+    return render(request, "blog/author.html", {"author": identified_author})
