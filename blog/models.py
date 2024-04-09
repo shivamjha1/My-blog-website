@@ -10,7 +10,7 @@ class Author(models.Model):
 class Tags(models.Model):
     caption=models.CharField(max_length=20)
         
-class blog(models.Model):
+class Blog(models.Model):
     title=models.CharField(max_length=50,null=False)
     image=models.CharField(max_length=50)
     excerpt=models.CharField(max_length=100)
