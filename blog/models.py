@@ -6,6 +6,7 @@ class Author(models.Model):
     firstname=models.CharField(max_length=30)
     lastname=models.CharField(max_length=30,null=True)
     email=models.CharField(max_length=30,null=True)
+    picture=models.CharField(max_length=100,null=True)
     
     def __str__(self):
         return self.firstname+" "+self.lastname
