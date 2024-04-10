@@ -32,3 +32,8 @@ def post_detail(request, slug):
 def author(request, author):
     identified_author = next(auth for auth in all_author if auth.firstname == author)
     return render(request, "blog/author.html", {"author": identified_author})
+
+def allauthor(request):
+    return render(request,"blog/all-authors.html",{
+        "all_author":all_author
+    })

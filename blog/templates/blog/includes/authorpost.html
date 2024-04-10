@@ -1,0 +1,11 @@
+{% load static %}
+<li><article class="post">
+    <a href="{% url "author-page" author.firstname %}">
+        <img src="{% static "blog/images/"|add:author.picture %}" alt={{author.firstname}}/>
+        <div class="post_content">
+            <h3>{{author.firstname}} {{author.lastname}}</h3>
+            <p>{{author.email}}</p>
+        </div>
+    </a>
+</article>
+</li>

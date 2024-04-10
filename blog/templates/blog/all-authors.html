@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title%}All My Posts{% endblock %}
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static "blog/all-posts.css" %}" />
+<link rel="stylesheet" href="{% static "blog/post.css" %}" />
+{% endblock %}
+
+
+{% block content %}
+hello
+
+<section id="all-posts">
+    <h2>All the authors of blog</h2>
+    <ul>
+        {% for author in all_author %}
+        {% include "blog/includes/authorpost.html" %}
+        {% endfor %}
+    </ul>
+</section>
+{% endblock %}
