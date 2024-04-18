@@ -1,10 +1,11 @@
 from typing import Any
 from django.db.models.query import QuerySet
 from django.shortcuts import render
+from django.urls import reverse
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect 
 from datetime import date
-from django.views.generic import ListView,DetailView
+from django.views.generic import ListView,DetailView,View
 from django.views.generic.base import TemplateView
 
 from .models import Author,Blog,Tags,Comments
@@ -45,15 +46,33 @@ class AllPosts(ListView):
 
 
 
-class PostDetail(DetailView):
-    template_name="blog/post-detail.html"
-    model=Blog
-    context_object_name="post"
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        context= super().get_context_data(**kwargs)
-        context["post_tags"]=self.object.tags.all()
-        context["comment_form"]=CommentForm()
-        return context
+class PostDetail(View):
+    
+    def get(self,request,slug):
+        blog=Blog.objects.get(slug=slug)
+        context={
+            "post":blog,
+            "post_tags":blog.tags.all(),
+            "comment_form":CommentForm(),
+            "comments":blog.comments.all().order_by("-id") 
+        }
+        return render(request,"blog/post-detail.html",context)
+    
+    def post(self,request,slug):
+        comment_form=CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment=comment_form.save(commit=False)
+            comment.blog=Blog.objects.get(slug=slug)
+            comment.save()
+            return HttpResponseRedirect(reverse("post-detail-page",args=[slug]))
+        blog=Blog.objects.get(slug=slug)
+        context={
+            "post":blog,
+            "post_tags":blog.tags.all(),
+            "comment_form":CommentForm(),
+            "comments":blog.comments.all().order_by("-id")    
+        }
+        return render(request,"blog/post-detail.html",context)
       
 # def post_detail(request, slug):
 #     identified_post=next(post for post in all_post if post.slug==slug)

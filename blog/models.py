@@ -36,5 +36,6 @@ class Comments(models.Model):
     user_name=models.CharField(max_length=100)
     user_email=models.EmailField(max_length=100)
     comment_text=models.TextField(max_length=500)
-    blog=models.ForeignKey(Blog,on_delete=models.CASCADE,related_name="blog",null=True)
-    
+    blog=models.ForeignKey(Blog,on_delete=models.CASCADE,related_name="comments",null=True)
+    def __str__(self) -> str:
+        return self.user_name
