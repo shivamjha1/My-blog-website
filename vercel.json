@@ -1,19 +1,26 @@
 {
-    "version": 2,
-    "builds": [
-      {
-        "src": "my_site/wsgi.py",
-        "use": "@vercel/python",
-        "config": {
-          "maxLambdaSize": "15mb"
-        }
+  "version": 2,
+  "builds": [
+    {
+      "src": "my_site/wsgi.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "15mb"
       }
-    ],
-    "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "my_site/wsgi.py"
-      }
-    ]
-  }
-  
+    },
+    {
+      "src": "staticfiles/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/static/(.*)",
+      "dest": "/staticfiles/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "my_site/wsgi.py"
+    }
+  ]
+}
